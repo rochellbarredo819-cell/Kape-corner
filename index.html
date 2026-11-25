@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kape Corner – Online Ordering</title>
+  <meta name="description" content="Front-end online ordering prototype for a fictional neighborhood café.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="#home">Kape Corner</a>
+      <nav aria-label="Main">
+        <ul class="nav">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#order">Order</a></li>
+          <li><a href="#records">My orders <span id="orderCount" class="badge">0</span></a></li>
+          <li><a href="#help">Help</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- HOME / DASHBOARD -->
+    <section id="home" class="hero">
+      <div class="wrap">
+        <h1>Fresh coffee and pandesal, ordered in a minute.</h1>
+        <p class="lead">Kape Corner is a demo ordering system. Pick your items, fill in your details, and track your order from Pending to Completed.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#menu">Browse the menu</a>
+          <a class="btn" href="#records">View my orders</a>
+        </div>
+        <p class="notice">This is a front-end prototype. Payments and notifications are simulated, and orders are saved only in this browser.</p>
+      </div>
+    </section>
+
+    <!-- SERVICES / LISTINGS -->
+    <section id="menu" class="section">
+      <div class="wrap">
+        <h2>Menu</h2>
+        <div class="toolbar">
+          <label for="menuFilter">Show</label>
+          <select id="menuFilter">
+            <option value="all">All items</option>
+            <option value="Drinks">Drinks</option>
+            <option value="Bread &amp; Pastry">Bread &amp; Pastry</option>
+            <option value="Meals">Meals</option>
+          </select>
+        </div>
+        <div id="menuGrid" class="menu-grid"></div>
+      </div>
+    </section>
+
+    <!-- TRANSACTION FORM -->
+    <section id="order" class="section alt">
+      <div class="wrap two-col">
+        <div>
+          <h2>Your cart</h2>
+          <div id="cartBox" aria-live="polite"></div>
+        </div>
+
+        <form id="orderForm" novalidate>
+          <h2>Order details</h2>
+
+          <div class="field">
+            <label for="custName">Full name</label>
+            <input id="custName" name="name" type="text" autocomplete="name" maxlength="60">
+            <p class="error" id="err-name" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="custPhone">Mobile number</label>
+            <input id="custPhone" name="phone" type="tel" inputmode="numeric" placeholder="09123456789" maxlength="13" autocomplete="tel">
+            <p class="error" id="err-phone" role="alert"></p>
+          </div>
+
+          <fieldset class="field">
+            <legend>How will you get your order?</legend>
+            <label class="radio"><input type="radio" name="type" value="Pickup" checked> Pickup (free)</label>
+            <label class="radio"><input type="radio" name="type" value="Delivery"> Delivery (₱40 fee)</label>
+          </fieldset>
+
+          <div class="field" id="addressField" hidden>
+            <label for="custAddress">Delivery address</label>
+            <input id="custAddress" name="address" type="text" maxlength="120" autocomplete="street-address">
+            <p class="error" id="err-address" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="custPayment">Payment method (simulated)</label>
+            <select id="custPayment" name="payment">
+              <option>Cash</option>
+              <option>GCash</option>
+              <option>Card</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="custNotes">Notes <span class="muted">(optional)</span></label>
+            <textarea id="custNotes" name="notes" rows="3" maxlength="200"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Place order</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- CONFIRMATION / SUMMARY -->
+    <section id="confirmation" class="section" hidden>
+      <div class="wrap">
+        <h2>Order confirmed</h2>
+        <div id="confirmBox" class="panel" tabindex="-1"></div>
+      </div>
+    </section>
+
+    <!-- RECORDS MANAGEMENT -->
+    <section id="records" class="section alt">
+      <div class="wrap">
+        <h2>My orders</h2>
+        <div class="toolbar">
+          <div>
+            <label for="searchBox">Search</label>
+            <input id="searchBox" type="search" placeholder="Name or reference no.">
+          </div>
+          <div>
+            <label for="statusFilter">Status</label>
+            <select id="statusFilter">
+              <option value="all">All</option>
+              <option>Pending</option>
+              <option>Preparing</option>
+              <option>Ready</option>
+              <option>Completed</option>
+              <option>Cancelled</option>
+            </select>
+          </div>
+          <button type="button" id="loadSample" class="btn">Load sample orders</button>
+        </div>
+        <div id="recordsList" class="records" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ABOUT / HELP -->
+    <section id="help" class="section">
+      <div class="wrap">
+        <h2>About and help</h2>
+        <p>Kape Corner is a school project that shows how an online ordering system works using only HTML, CSS, and JavaScript. All shop names, people, and orders are made up.</p>
+        <ol class="steps">
+          <li>Choose items from the <a href="#menu">menu</a> and press <strong>Add</strong>.</li>
+          <li>Change quantities in the cart (1 to 20 per item).</li>
+          <li>Fill in your details and press <strong>Place order</strong>.</li>
+          <li>Find your order under <a href="#records">My orders</a>. You can update its status, edit your details, cancel it, or delete it.</li>
+        </ol>
+        <p class="muted">Your orders stay after refreshing the page, but only on this browser and device.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Kape Corner demo · Student project · Fictional business</p></div>
+  </footer>
+
+  <!-- Details / edit dialog -->
+  <dialog id="detailsDialog" aria-labelledby="dlgTitle">
+    <form id="editForm" novalidate>
+      <h3 id="dlgTitle">Order details</h3>
+      <div id="dlgItems"></div>
+      <div class="field">
+        <label for="editName">Full name</label>
+        <input id="editName" type="text" maxlength="60">
+        <p class="error" id="err-editName" role="alert"></p>
+      </div>
+      <div class="field">
+        <label for="editPhone">Mobile number</label>
+        <input id="editPhone" type="tel" maxlength="13">
+        <p class="error" id="err-editPhone" role="alert"></p>
+      </div>
+      <div class="field">
+        <label for="editNotes">Notes</label>
+        <textarea id="editNotes" rows="2" maxlength="200"></textarea>
+      </div>
+      <div class="actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" id="dlgClose" class="btn">Close</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
